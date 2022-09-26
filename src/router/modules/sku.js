@@ -9,7 +9,7 @@ export default {
     component: () => import('@/views/sku'),
     meta: {
       title: '商品管理',
-      icon: 'dashboard'
+      icon: 'shangpin'
     }
   }]
 }

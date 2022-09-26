@@ -93,7 +93,7 @@
 import dayjs from 'dayjs'
 import SaleEacharts from './components/sale-eacharts.vue'
 import NumberPartners from './components/number-partners.vue'
-import { getSummaryInformation, getSkuTop, getSales, getIncome } from '@/api/staff'
+import { getSummaryInformation, getSkuTop, getSales, getIncome } from '@/api'
 export default {
   name: 'Dashboard',
   components: {

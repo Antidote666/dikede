@@ -9,7 +9,7 @@ export default {
     component: () => import('@/views/order'),
     meta: {
       title: '订单管理',
-      icon: 'dashboard'
+      icon: 'shebei'
     }
   }]
 }

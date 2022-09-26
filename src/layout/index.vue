@@ -55,6 +55,7 @@ export default {
   @import "~@/styles/variables.scss";
 
   .app-wrapper {
+    overflow: hidden;
     @include clearfix;
     position: relative;
     height: 100%;

@@ -9,7 +9,7 @@ export default {
     component: () => import('@/views/user'),
     meta: {
       title: '人员管理',
-      icon: 'dashboard'
+      icon: 'renyuan'
     }
   }]
 }

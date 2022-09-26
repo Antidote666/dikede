@@ -9,7 +9,7 @@ export default {
     component: () => import('@/views/policy'),
     meta: {
       title: '策略管理',
-      icon: 'dashboard'
+      icon: 'renyuan'
     }
   }]
 }

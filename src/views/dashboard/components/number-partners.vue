@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { nodeCollect, getCount, getCooperation } from '@/api/staff'
+import { nodeCollect, getCount, getCooperation } from '@/api'
 import * as echarts from 'echarts'
 export default {
   data() {
@@ -69,7 +69,21 @@ export default {
             center: ['50%', '50%'],
             roseType: 'radius',
             data,
-            color: ['#92b7ff', '#99ebbd', '#ffb18b', '#c6ebff', '#d1e0fd']
+            color: ['#92b7ff', '#99ebbd', '#ffb18b', '#c6ebff', '#d1e0fd'],
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true,
+                  formatter: function(value) {
+                    return `${value.name}
+${value.percent}%`
+                  }
+                },
+                labelLine: {
+                  show: true
+                }
+              }
+            }
           }
         ]
       }

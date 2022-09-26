@@ -9,7 +9,7 @@ export default {
     component: () => import('@/views/task'),
     meta: {
       title: '工单管理',
-      icon: 'dashboard'
+      icon: 'gongdan'
     }
   }]
 }

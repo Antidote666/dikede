@@ -17,13 +17,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .app-main {
   /*50 = navbar  */
   position: relative;
+  overflow: auto;
+  height: calc(100vh - 60px);
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: hsla(0,0%,40%,.3);
+    border-radius: 10px;
+  }
 }
 .fixed-header+.app-main {
-  padding-top: 60px;
+  margin-top: 60px;
 }
 </style>
 

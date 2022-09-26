@@ -9,7 +9,7 @@ export default {
     component: () => import('@/views/vm'),
     meta: {
       title: '设备管理',
-      icon: 'dashboard'
+      icon: 'shebei'
     }
   }]
 }

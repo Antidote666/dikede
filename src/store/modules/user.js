@@ -1,4 +1,4 @@
-import { login } from '@/api/user'
+import { login } from '@/api'
 import { Message } from 'element-ui'
 import router from '@/router'
 export default {

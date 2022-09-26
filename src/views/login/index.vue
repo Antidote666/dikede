@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { getCode } from '@/api/user'
+import { getCode } from '@/api'
 export default {
   name: 'Login',
   data() {

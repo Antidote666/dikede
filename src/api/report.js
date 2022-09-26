@@ -1,11 +1,5 @@
 import request from '@/utils/request'
 
-export const getSummaryInformation = (start, end) => {
-  return request({
-    url: `/task-service/task/taskReportInfo/${start}/${end}`
-  })
-}
-
 export const getSkuTop = (topValue, start, end) => {
   return request({
     url: `/order-service/report/skuTop/${topValue}/${start}/${end}`
@@ -41,22 +35,3 @@ export const regionCollect = (start, end) => {
     url: `/order-service/report/regionCollect/${start}/${end}`
   })
 }
-
-export const nodeCollect = () => {
-  return request({
-    url: `/vm-service/node/nodeCollect`
-  })
-}
-
-export const getCount = () => {
-  return request({
-    url: `/vm-service/node/count`
-  })
-}
-
-export const getCooperation = () => {
-  return request({
-    url: `/user-service/partner/count`
-  })
-}
-

@@ -20,7 +20,7 @@
 <script>
 import dayjs from 'dayjs'
 import * as echarts from 'echarts'
-import { amountCollect, regionCollect } from '@/api/staff'
+import { amountCollect, regionCollect } from '@/api'
 export default {
   data() {
     return {
@@ -54,7 +54,11 @@ export default {
   methods: {
     async salesTrendChart() {
       // 绘制图表
-      const { data } = await amountCollect(1, this.star, this.end)
+      let index = 1
+      if (this.currTime === '年') {
+        index = 2
+      }
+      const { data } = await amountCollect(index, this.star, this.end)
       let asx = []
       if (this.currTime === '周') {
         asx = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
@@ -76,7 +80,9 @@ export default {
         },
         yAxis: {
           type: 'value'
-
+        },
+        grid: {
+          left: 100
         },
         series: [
           {
@@ -113,7 +119,17 @@ export default {
       const option = {
         xAxis: {
           type: 'category',
-          data: data.xAxis
+          data: data.xAxis,
+          axisLabel: {
+            formatter: function(value) {
+              if (value.length >= 4) {
+                return `${value.slice(0, 3)}
+...`
+              }
+              return value
+            }
+          }
+          // data: data.xAxis
         },
         yAxis: {
           type: 'value',
@@ -125,6 +141,9 @@ export default {
               return value
             }
           }
+        },
+        grid: {
+          left: 50
         },
         series: [
           {

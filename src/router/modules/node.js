@@ -9,7 +9,7 @@ export default {
     component: () => import('@/views/node'),
     meta: {
       title: '点位管理',
-      icon: 'dashboard'
+      icon: 'dianwei'
     }
   }]
 }
