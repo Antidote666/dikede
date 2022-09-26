@@ -47,14 +47,14 @@
                   <span class="sub-title">{{ star }}-{{ end }}</span>
                 </el-col>
               </el-row>
-              <el-row type="flex" justify="space-between" align="middle" style="flex: 1;">
-                <el-col :span="6">
+              <el-row type="flex" justify="space-around" align="middle" style="flex: 1;">
+                <el-col :span="8">
                   <div class="flex-clunm">
                     <div class="num">{{ salesTotal }}</div>
                     <div class="text">订单量(个)</div>
                   </div>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="8">
                   <div class="flex-clunm">
                     <div class="num"> {{ salesIncom }}</div>
                     <div class="text">销售额(万元)</div>

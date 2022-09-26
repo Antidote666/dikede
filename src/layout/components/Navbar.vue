@@ -15,9 +15,14 @@
             <span>欢迎您，admin</span>
           </el-col>
           <el-col :span="5">
-            <el-tooltip effect="dark" content="退出" placement="bottom">
-              <span class="tooltip-span" @click="logout">退出</span>
-            </el-tooltip>
+            <div class="tooltip-span">
+              <el-tooltip effect="dark" content="退出" placement="bottom">
+                <div class="logout" @click="logout">
+                  <span>退出 </span>
+                  <i class="el-icon-caret-bottom" />
+                </div>
+              </el-tooltip>
+            </div>
           </el-col>
         </el-row>
       </div>
@@ -120,10 +125,7 @@ export default {
         }
       }
     }
-    .tooltip-span{
-      vertical-align: middle;
-       cursor: pointer;
-    }
+
     .avatar-container {
       margin-right: 30px;
 
@@ -148,5 +150,12 @@ export default {
       }
     }
   }
+}
+.tooltip-span{
+      // vertical-align: middle;
+       cursor: pointer;
+}
+.logout{
+  display: flex;
 }
 </style>

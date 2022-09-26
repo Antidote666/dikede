@@ -77,7 +77,7 @@ $sideBarWidth:176px;
         background-color: $menuHover !important;
       }
     }
-
+    
     .is-active>.el-submenu__title {
       color: $subMenuActiveText !important;
     }
@@ -198,7 +198,7 @@ $sideBarWidth:176px;
       margin-left: -2px;
     }
   }
-
+  
   .nest-menu .el-submenu>.el-submenu__title,
   .el-menu-item {
     &:hover {
@@ -206,7 +206,7 @@ $sideBarWidth:176px;
       background-color: $menuHover !important;
     }
   }
-
+ 
   // the scroll bar appears when the subMenu is too long
   >.el-menu--popup {
     max-height: 100vh;
@@ -226,3 +226,9 @@ $sideBarWidth:176px;
     }
   }
 }
+// .nest-menu .el-menu-item{
+//   color: #a69999  ;
+// }
+// .nest-menu .is-active{
+//   color: #a69999  ;
+//   }

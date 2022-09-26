@@ -11,6 +11,7 @@ export default {
   children: [{
     path: 'business',
     name: 'Business',
+    component: () => import('@/views/business'),
     meta: {
       title: '运营工单'
     }

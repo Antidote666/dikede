@@ -20,8 +20,11 @@ export default {
 <style scoped lang="scss">
 .app-main {
   /*50 = navbar  */
+  // width: calc(100vw - 176px);
+  // overflow-x: auto;
   position: relative;
   overflow: auto;
+  // overflow-x:scroll;
   height: calc(100vh - 60px);
   &::-webkit-scrollbar {
     width: 6px;
