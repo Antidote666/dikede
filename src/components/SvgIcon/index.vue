@@ -45,11 +45,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/styles/variables.scss";
 .svg-icon {
   width: 16px;
   height: 16px;
   vertical-align: -0.15em;
+  // fill: $subMenuActiveText;
   fill: #000;
   overflow: hidden;
 }

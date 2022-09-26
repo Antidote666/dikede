@@ -12,6 +12,7 @@ import Policy from './modules/policy'
 import Sku from './modules/sku'
 import User from './modules/user'
 import Vm from './modules/vm'
+import Report from './modules/report'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -39,11 +40,12 @@ import Vm from './modules/vm'
 export const asyncRoutes = [
   Task,
   Node,
-  Order,
-  Policy,
-  Sku,
+  Vm,
   User,
-  Vm
+  Sku,
+  Policy,
+  Order,
+  Report
 ]
 
 export const constantRoutes = [
