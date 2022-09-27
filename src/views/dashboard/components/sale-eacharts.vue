@@ -11,8 +11,8 @@
       </div>
     </div>
     <el-row type="flex" justify="space-between" align="middle">
-      <div id="left" style="width: 412px;height:278px;" />
-      <div id="right" style="width: 412px;height:278px;" />
+      <div id="left" style="width: 476px;height:278px;" />
+      <div id="right" style="width: 476px;height:278px;" />
     </el-row>
   </el-card>
 </template>
@@ -30,7 +30,7 @@ export default {
   computed: {
     star() {
       if (this.currTime === '周') {
-        return dayjs(new Date()).subtract(6, 'day').format('YYYY-MM-DD')
+        return dayjs().startOf('week').add(1, 'day').format('YYYY-MM-DD')
       } else if (this.currTime === '月') {
         return dayjs(new Date().setDate(1)).format('YYYY-MM-DD')
       }
@@ -61,7 +61,8 @@ export default {
       const { data } = await amountCollect(index, this.star, this.end)
       let asx = []
       if (this.currTime === '周') {
-        asx = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+        const length = data.xAxis.length
+        asx = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'].splice(0, length)
       } else {
         asx = data.xAxis
       }
@@ -82,7 +83,7 @@ export default {
           type: 'value'
         },
         grid: {
-          left: 100
+          left: 80
         },
         series: [
           {
@@ -135,15 +136,16 @@ export default {
           type: 'value',
           axisLabel: {
             formatter: function(value, index) {
-              if (value >= 1000) {
-                value = value / 1000
+              if (value >= 100) {
+                value = value / 100
               }
-              return value
+
+              return value.toString().replace(/\d(?=(\d{3})+\b)/g, '$&,')
             }
           }
         },
         grid: {
-          left: 50
+          left: 70
         },
         series: [
           {
