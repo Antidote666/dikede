@@ -1,0 +1,19 @@
+.details{
+  color: #5f84ff;
+  cursor: pointer;
+}
+.result{
+  padding: 20px 15px 19px 17px;
+  background-color: #fff;
+}
+.dashboard {
+  &-container {
+    margin: 20px;
+  }
+  &-text {
+    font-size: 30px;
+    line-height: 46px;
+  }
+}
+.dialog{
+}

@@ -142,15 +142,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 20px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
 .bg1{
     background: #e9f3ff;
     background-image: url('~@/assets/common/echart-bg.png'),url('~@/assets/common/echart-bg2.png');

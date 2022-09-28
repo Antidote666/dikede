@@ -16,3 +16,10 @@ export const getOrderSearch = (pageIndex, pageSize, isRepair) => {
     }
   })
 }
+
+export const getJobDetails = (taskId) => {
+  return request({
+    url: `/task-service/task/taskInfo/` + taskId
+  })
+}
+

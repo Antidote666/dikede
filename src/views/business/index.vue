@@ -13,18 +13,40 @@
         @current-change="handleCurrentChange"
       />
     </el-card>
-
+    <lin-form
+      :form-labels="formLabel"
+      :form-data="currentData"
+      :inline="true"
+      :visible.sync="dialogVisible"
+    >
+      <template #dialogBodyTop>
+        <div class="status">
+          <div> <span class="el-icon-warning" /> <span>取消</span></div>
+          <img src="@/assets/common/formempty.png" alt="">
+        </div>
+      </template>
+      <template #details>
+        <span class="details">补货数量</span>
+      </template>
+      <template #dialogFooter>
+        <div class="dialogFooter">
+          <el-button type="primary" class="recreate">重新创建</el-button>
+        </div>
+      </template>
+    </lin-form>
   </div>
 </template>
 
 <script>
 import LinTabel from '@/components/TabelFormPage/Table'
 import LinPage from '@/components/TabelFormPage/Page'
-import { getOrderSearch } from '@/api'
+import LinForm from '@/components/TabelFormPage/Form'
+import { getOrderSearch, getJobDetails } from '@/api'
 export default {
   components: {
     LinPage,
-    LinTabel
+    LinTabel,
+    LinForm
   },
   data() {
     return {
@@ -41,8 +63,19 @@ export default {
         'taskStatusTypeEntity.statusName': '工单状态',
         userName: '运营人员',
         createTime: '创建日期'
-      }
-      // operation: '操作'
+      },
+      formLabel: {
+        innerCode: '设备编号',
+        createTime: '创建日期',
+        updateTime: '取消日期',
+        userName: '运营人员',
+        'taskType.typeName': '工单类型',
+        'details': '补货数量',
+        createType: '工单方式',
+        desc: '取消原因'
+      },
+      currentData: {},
+      dialogVisible: false
     }
   },
   created() {
@@ -60,31 +93,56 @@ export default {
       this.totalPage = +data.totalPage
       console.log(data.totalCount)
     },
-    getDetails(scoped) {
-      console.log(scoped)
+    async getJobDetails(id) {
+      const { data } = await getJobDetails(id)
+      this.currentData = data
+      this.currentData.createType = this.currentData.createType ? '手动' : '自动'
+      this.currentData.createTime = this.currentData.createTime.split('T').join(' ')
+      console.log(data)
+    },
+    async getDetails({ taskId }) {
+      await this.getJobDetails(taskId)
+      this.dialogVisible = true
     },
     handleCurrentChange(val) {
       this.getOrderSearch()
     }
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.result{
-  padding: 20px 15px 19px 17px;
-    background-color: #fff;
-}
-.dashboard {
-  &-container {
-    margin: 20px;
+.status{
+  .el-icon-warning{
+  font-size: 35px;
+  margin-right: 16px;
+  margin-left: 22px;
   }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
+ > div{
+  display: flex;
+  align-items: center;
+ }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 54px;
+  margin-bottom: 25px;
+  padding-right: 76px;
+  background-color: hsla(0,0%,92.5%,.39)
 }
-.details{
-  color: #5f84ff;
+.dialogFooter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .recreate{
+    width: 80px!important;
+    height: 36px;
+    padding: 0;
+    background-color: #fbf4f0!important;
+    border: none;
+    color: #655b56!important;
+  }
+
 }
 </style>

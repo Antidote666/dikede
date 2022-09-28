@@ -19,7 +19,7 @@
       :label="value"
     >
       <template slot-scope="{row}">
-        <slot :name="item" :scope="row">{{ lable(row,item) }}</slot>
+        <slot :name="item" :scope="row">{{ label(row,item) }}</slot>
       </template>
     </el-table-column>
 
@@ -59,7 +59,7 @@ export default {
     }
   },
   computed: {
-    lable() {
+    label() {
       return (row, item) => {
         if (item.includes('.')) {
           const keys = item.split('.')
