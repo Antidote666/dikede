@@ -1,11 +1,11 @@
 <template>
   <div v-if="total>10" class="lin-pagination-container">
     <div class="lin-pagination-left">
-      共{{ total }}条记录 第{{ page }}/{{ allPage }}
+      共{{ total }}条记录 第{{ currentPage }}/{{ totalPage }}页
     </div>
     <div class="lin-pagination-right">
-      <button class="left-btn" :class="{disable:page<=1}" :disabled="page<=1" @click="previousPage">上一页</button>
-      <button class="right-btn" :class="{disable:page==allPage}" :disabled="page==allPage" @click="nextPage">下一页</button>
+      <button class="left-btn" :class="{disable:currentPage<=1}" :disabled="currentPage<=1" @click="previousPage">上一页</button>
+      <button class="right-btn" :class="{disable:currentPage===totalPage}" :disabled="currentPage===totalPage" @click="nextPage">下一页</button>
     </div>
 
   </div>
@@ -15,11 +15,19 @@
 export default {
   props: {
     total: {
-      type: [String, Number],
+      type: Number,
       required: true
     },
-    page: {
-      type: [String, Number],
+    currentPage: {
+      type: Number,
+      required: true
+    },
+    pageSize: {
+      type: Number,
+      default: 10
+    },
+    totalPage: {
+      type: Number,
       required: true
     }
   },
@@ -28,17 +36,14 @@ export default {
 
     }
   },
-  computed: {
-    allPage() {
-      return (+this.total) / 10
-    }
-  },
   methods: {
     previousPage() {
-      this.$emit('update:page', this.page - 1)
+      this.$emit('update:currentPage', this.currentPage - 1)
+      this.$emit('current-change', this.currentPage - 1)
     },
     nextPage() {
-      this.$emit('update:page', this.page + 1)
+      this.$emit('update:currentPage', this.currentPage + 1)
+      this.$emit('current-change', this.currentPage + 1)
     }
   }
 }

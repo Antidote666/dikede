@@ -38,7 +38,7 @@ module.exports = {
     },
     proxy: {
       '/api': {
-        target: 'https://likede2-java.itheima.net',
+        target: 'http://likede2-admin.itheima.net/likede/',
         changeOrigin: true // 只有这个值为true的情况下 才表示开启跨域
       }
     }
