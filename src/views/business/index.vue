@@ -1,11 +1,17 @@
 <template>
   <div class="dashboard-container">
     <el-card class="result">
+      <el-row type="flex" class="operation">
+        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="showNewlyBuild">新建</el-button>
+        <el-button type="primary">工单配置</el-button>
+      </el-row>
+
       <lin-tabel :table-data="tableData" :labels="labels" :current-page="currentPage">
         <template #operation="{scope}">
           <span class="details" @click="getDetails(scope)">查看详情</span>
         </template>
       </lin-tabel>
+
       <lin-page
         :total="total"
         :current-page.sync="currentPage"
@@ -13,47 +19,40 @@
         @current-change="handleCurrentChange"
       />
     </el-card>
-    <lin-form
-      :form-labels="formLabel"
-      :form-data="currentData"
-      :inline="true"
-      :visible.sync="dialogVisible"
-    >
-      <template #dialogBodyTop>
-        <div class="status">
-          <div> <span class="el-icon-warning" /> <span>取消</span></div>
-          <img src="@/assets/common/formempty.png" alt="">
-        </div>
-      </template>
-      <template #details>
-        <span class="details">补货数量</span>
-      </template>
-      <template #dialogFooter>
-        <div class="dialogFooter">
-          <el-button type="primary" class="recreate">重新创建</el-button>
-        </div>
-      </template>
-    </lin-form>
+
+    <!-- 查看详情 -->
+    <order-details
+      :view-details-visible="viewDetailsVisible"
+      :current-data="currentData"
+      @update:viewDetailsVisible="viewDetailsVisible=$event"
+    />
+
+    <!-- 新建工单 -->
+    <order-add :newly-build-visible="newlyBuildVisible" @update:newlyBuildVisible="newlyBuildVisible=$event" />
   </div>
 </template>
 
 <script>
 import LinTabel from '@/components/TabelFormPage/Table'
 import LinPage from '@/components/TabelFormPage/Page'
-import LinForm from '@/components/TabelFormPage/Form'
+import OrderDetails from './components/order-details.vue'
+import OrderAdd from './components/order-add.vue'
 import { getOrderSearch, getJobDetails } from '@/api'
 export default {
   components: {
     LinPage,
     LinTabel,
-    LinForm
+    OrderDetails,
+    OrderAdd
   },
   data() {
     return {
+      // table 分页
       currentPage: 1,
       pageSize: 10,
       total: 0,
       totalPage: 0,
+      // table 数据
       tableData: [],
       labels: {
         taskCode: '工单编号',
@@ -64,20 +63,14 @@ export default {
         userName: '运营人员',
         createTime: '创建日期'
       },
-      formLabel: {
-        innerCode: '设备编号',
-        createTime: '创建日期',
-        updateTime: '取消日期',
-        userName: '运营人员',
-        'taskType.typeName': '工单类型',
-        'details': '补货数量',
-        createType: '工单方式',
-        desc: '取消原因'
-      },
+
+      viewDetailsVisible: false,
       currentData: {},
-      dialogVisible: false
+      // 新增 数据
+      newlyBuildVisible: false
     }
   },
+
   created() {
     this.getOrderSearch()
   },
@@ -102,10 +95,13 @@ export default {
     },
     async getDetails({ taskId }) {
       await this.getJobDetails(taskId)
-      this.dialogVisible = true
+      this.viewDetailsVisible = true
     },
     handleCurrentChange(val) {
       this.getOrderSearch()
+    },
+    showNewlyBuild() {
+      this.newlyBuildVisible = true
     }
 
   }
@@ -113,29 +109,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.status{
-  .el-icon-warning{
-  font-size: 35px;
-  margin-right: 16px;
-  margin-left: 22px;
+
+.operation{
+  margin-bottom: 20px;
+  .el-button{
+    border: none;
   }
- > div{
-  display: flex;
-  align-items: center;
- }
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 54px;
-  margin-bottom: 25px;
-  padding-right: 76px;
-  background-color: hsla(0,0%,92.5%,.39)
-}
-.dialogFooter{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .recreate{
+  .el-button:nth-child(1){
+    width: 80px!important;
+    height: 36px;
+    padding: 0;
+    background: linear-gradient(135deg,#ff9743,#ff5e20)!important;
+  }
+  .el-button:nth-child(2){
+  margin-left: 10px;
     width: 80px!important;
     height: 36px;
     padding: 0;
@@ -143,6 +130,5 @@ export default {
     border: none;
     color: #655b56!important;
   }
-
 }
 </style>

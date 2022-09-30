@@ -11,3 +11,10 @@ export const getCount = () => {
     url: `/vm-service/node/count`
   })
 }
+
+export const getDetailsOfVendingMachineAisle = (innerCode) => {
+  return request({
+    url: `/vm-service/channel/channelList/` + innerCode
+  })
+}
+

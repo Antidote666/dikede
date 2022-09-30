@@ -30,3 +30,8 @@ export const login = (data) => {
   })
 }
 
+export const getVendingListOperators = (innerCode) => {
+  return request({
+    url: `/user-service/user/operatorList/` + innerCode
+  })
+}

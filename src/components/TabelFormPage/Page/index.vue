@@ -77,10 +77,12 @@ export default {
     border: none;
     background-color: #d5ddf8;
     color:#606266;
+    cursor: pointer;
   }
   .disable{
     background-color: #d5ddf8;
     color: #bbbcc3;
+    cursor: not-allowed
   }
 }
 

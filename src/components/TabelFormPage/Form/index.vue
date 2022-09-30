@@ -1,41 +1,61 @@
 <template>
   <el-dialog
     v-if="visible"
-    title="工单详情"
+    :title="title"
     :visible="visible"
     :before-close="handleClose"
     :close-on-click-modal="false"
     class="dialog"
   >
     <slot name="dialogBodyTop" />
-    <el-form :model="formData" :inline="inline">
-      <template v-if="modify" />
-      <template v-else>
+    <slot name="dialogBody">
+      <el-form ref="formRef" :model="formData" :inline="inline" class="form">
         <template v-if="inline">
           <el-row>
             <el-col v-for="(value,item,index) in formLabels" :key="index" :span="12">
-              <el-form-item :label="value" label-width="140px" class="col-row-form">
+              <el-form-item :label="value" label-width="120px" class="col-row-form">
                 <slot :name="item"><div>{{ label(formData,item) }}</div></slot>
               </el-form-item>
             </el-col>
           </el-row>
         </template>
         <template v-else>
-          <el-form-item v-for="(value,item,index) in formLabels" :key="index" :label="value">
+          <el-form-item
+            v-for="(value,item,index) in formLabels"
+            :key="index"
+            :label="value"
+            label-width="140px"
+            :rules="[{required:true,message:'请输入',trigger:'blur'}]"
+            :prop="item"
+            class="modfiy-item"
+          >
             <slot :name="item"><div>{{ label(formData,item) }}</div></slot>
           </el-form-item>
         </template>
-      </template>
-    </el-form>
+      </el-form>
+    </slot>
     <template #footer>
-      <slot name="dialogFooter" />
+      <template v-if="inline">
+        <slot name="dialogFooter" />
+      </template>
+      <template v-else>
+        <div class="footer-bottom">
+          <el-button type="primary" class="cancel" @click="handleClose">取消</el-button>
+          <el-button type="primary" class="confirm" @click="onConfirm">确认</el-button>
+        </div>
+      </template>
     </template>
+
   </el-dialog>
 </template>
 
 <script>
 export default {
   props: {
+    title: {
+      type: String,
+      default: '提示'
+    },
     formLabels: {
       type: Object,
       default: () => ({})
@@ -47,10 +67,6 @@ export default {
     inline: {
       type: Boolean,
       default: false
-    },
-    modify: {
-      type: Boolean,
-      required: false
     },
     visible: {
       type: Boolean,
@@ -72,14 +88,50 @@ export default {
   methods: {
     handleClose() {
       this.$emit('update:visible', false)
+      this.$refs.formRef?.resetFields()
+    },
+    onConfirm() {
+      this.$emit('confirm')
+      this.handleClose()
     }
   }
 
 }
 </script>
 
-<style>
+<style lang="scss" >
+.el-form-item__label{
+  font-weight: 400;
+}
+.form .modfiy-item .el-form-item__content{
+  width: 396px;
+    line-height: 36px;
+}
 .col-row-form{
   margin-bottom:0px;
 }
+
+.footer-bottom{
+  text-align: center;
+}
+
+.el-button{
+    border: none;
+  }
+  .confirm{
+    width: 80px!important;
+    height: 36px;
+    padding: 0;
+    background: linear-gradient(135deg,#ff9743,#ff5e20)!important;
+    margin-left: 34px!important;
+  }
+  .cancel{
+  margin-left: 10px;
+    width: 80px!important;
+    height: 36px;
+    padding: 0;
+    background-color: #fbf4f0!important;
+    border: none;
+    color: #655b56!important;
+  }
 </style>

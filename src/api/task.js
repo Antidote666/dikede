@@ -23,3 +23,9 @@ export const getJobDetails = (taskId) => {
   })
 }
 
+export const createAJob = (data) => {
+  return request({
+    url: `/task-service/task/create`,
+    data
+  })
+}

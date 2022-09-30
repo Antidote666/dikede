@@ -3,10 +3,11 @@
     ref="singleTable"
     :data="tableData"
     highlight-current-row
-    style="width: 100%"
+    style="width: 100%;"
     size="medium"
   >
     <el-table-column
+      v-if="isIndexShow"
       label="序号"
       type="index"
       :index="indexMethod"
@@ -24,7 +25,8 @@
     </el-table-column>
 
     <el-table-column
-      label="操作"
+      v-if="isoperationShow"
+      :label="operationName"
       :width="operationWidth"
     >
       <template slot-scope="{row}">
@@ -56,6 +58,18 @@ export default {
     pageSize: {
       type: Number,
       default: 10
+    },
+    isIndexShow: {
+      type: Boolean,
+      default: true
+    },
+    isoperationShow: {
+      type: Boolean,
+      default: true
+    },
+    operationName: {
+      type: String,
+      default: '操作'
     }
   },
   computed: {
@@ -70,9 +84,7 @@ export default {
       }
     },
     indexMethod() {
-      return (index) => {
-        return (this.currentPage - 1) * this.pageSize + index + 1
-      }
+      return (index) => (this.currentPage - 1) * this.pageSize + index + 1
     }
   }
 }

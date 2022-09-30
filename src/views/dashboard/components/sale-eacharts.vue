@@ -43,10 +43,6 @@ export default {
       return dayjs(new Date()).format('YYYY-MM-DD')
     }
   },
-  created() {
-    // this.star = dayjs(new Date()).subtract(6, 'day').format('YYYY-MM-DD')
-    // this.end = dayjs(new Date()).format('YYYY-MM-DD')
-  },
   mounted() {
     this.salesTrendChart()
     this.salesRelease()
@@ -66,7 +62,6 @@ export default {
       } else {
         asx = data.xAxis
       }
-      // console.log(data)
       const serie = data.series.map(item => {
         item = item / 100
         item = item.toFixed(0)
@@ -112,6 +107,7 @@ export default {
         ]
       }
       option && myChart.setOption(option)
+      window.addEventListener('resize', myChart.resize)
     },
     async salesRelease() {
       const { data } = await regionCollect(this.star, this.end)
@@ -158,6 +154,7 @@ export default {
         ]
       }
       option && myChart.setOption(option)
+      window.addEventListener('resize', myChart.resize)
     },
     changeTime(e) {
       const weekRef = this.$refs.weekChange
