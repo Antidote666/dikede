@@ -14,26 +14,25 @@
 <script>
 export default {
   props: {
+    // 总数
     total: {
       type: Number,
       required: true
     },
+    // 当前页码
     currentPage: {
       type: Number,
       required: true
     },
+    // 条数
     pageSize: {
       type: Number,
       default: 10
     },
+    // 总页数
     totalPage: {
       type: Number,
       required: true
-    }
-  },
-  data() {
-    return {
-
     }
   },
   methods: {

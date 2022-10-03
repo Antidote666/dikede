@@ -1,9 +1,24 @@
 <template>
   <div class="dashboard-container">
+    <Banner :form-inline="formInline" @search="onSearch">
+      <template #taskCode>
+        <el-input v-model="bannerForm.taskCode" placeholder="请输入" size="medium" />
+      </template>
+      <template #status>
+        <el-select v-model="bannerForm.status" placeholder="请选择" size="medium">
+          <el-option
+            v-for="item in statusList"
+            :key="item.statusId"
+            :label="item.statusName"
+            :value="item.statusId"
+          />
+        </el-select>
+      </template>
+    </Banner>
     <el-card class="result">
-      <el-row type="flex" class="operation">
-        <el-button type="primary" icon="el-icon-circle-plus-outline" @click="showNewlyBuild">新建</el-button>
-        <el-button type="primary">工单配置</el-button>
+      <el-row type="flex" class="operation-btn">
+        <el-button type="primary" icon="el-icon-circle-plus-outline" class="newlyBuild" @click="showNewlyBuild">新建</el-button>
+        <el-button type="primary" class="batch">工单配置</el-button>
       </el-row>
 
       <lin-tabel :table-data="tableData" :labels="labels" :current-page="currentPage">
@@ -19,7 +34,6 @@
         @current-change="handleCurrentChange"
       />
     </el-card>
-
     <!-- 查看详情 -->
     <order-details
       :view-details-visible="viewDetailsVisible"
@@ -37,16 +51,29 @@ import LinTabel from '@/components/TabelFormPage/Table'
 import LinPage from '@/components/TabelFormPage/Page'
 import OrderDetails from './components/order-details.vue'
 import OrderAdd from './components/order-add.vue'
-import { getOrderSearch, getJobDetails } from '@/api'
+import Banner from '@/components/Banner'
+import { getOrderSearch, getJobDetails, workOrderStatusList } from '@/api'
 export default {
   components: {
     LinPage,
     LinTabel,
     OrderDetails,
-    OrderAdd
+    OrderAdd,
+    Banner
   },
   data() {
     return {
+      // 工单状态
+      statusList: [],
+      // 通栏
+      formInline: {
+        taskCode: '工单编号：',
+        status: '工单状态：'
+      },
+      bannerForm: {
+        taskCode: '',
+        status: ''
+      },
       // table 分页
       currentPage: 1,
       pageSize: 10,
@@ -73,8 +100,13 @@ export default {
 
   created() {
     this.getOrderSearch()
+    this.workOrderStatusList()
   },
   methods: {
+    async workOrderStatusList() {
+      const { data } = await workOrderStatusList()
+      this.statusList = data
+    },
     async getOrderSearch() {
       const { data } = await getOrderSearch(this.currentPage, this.pageSize, false)
       this.tableData = data.currentPageRecords.map(item => {
@@ -102,33 +134,15 @@ export default {
     },
     showNewlyBuild() {
       this.newlyBuildVisible = true
+    },
+    onSearch() {
+      console.log(1)
     }
 
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 
-.operation{
-  margin-bottom: 20px;
-  .el-button{
-    border: none;
-  }
-  .el-button:nth-child(1){
-    width: 80px!important;
-    height: 36px;
-    padding: 0;
-    background: linear-gradient(135deg,#ff9743,#ff5e20)!important;
-  }
-  .el-button:nth-child(2){
-  margin-left: 10px;
-    width: 80px!important;
-    height: 36px;
-    padding: 0;
-    background-color: #fbf4f0!important;
-    border: none;
-    color: #655b56!important;
-  }
-}
 </style>

@@ -55,8 +55,6 @@ export default {
         desc: '取消原因：'
       }
     }
-  },
-  methods: {
   }
 }
 </script>
@@ -92,6 +90,5 @@ export default {
     border: none;
     color: #655b56!important;
   }
-
 }
 </style>

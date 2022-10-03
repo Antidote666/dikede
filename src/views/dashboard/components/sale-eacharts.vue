@@ -30,6 +30,10 @@ export default {
   computed: {
     star() {
       if (this.currTime === '周') {
+        const date = new Date()
+        if (date.getDay() === 0) {
+          return dayjs().subtract(6, 'day').format('YYYY-MM-DD')
+        }
         return dayjs().startOf('week').add(1, 'day').format('YYYY-MM-DD')
       } else if (this.currTime === '月') {
         return dayjs(new Date().setDate(1)).format('YYYY-MM-DD')

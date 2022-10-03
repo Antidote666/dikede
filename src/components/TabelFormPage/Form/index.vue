@@ -9,7 +9,7 @@
   >
     <slot name="dialogBodyTop" />
     <slot name="dialogBody">
-      <el-form ref="formRef" :model="formData" :inline="inline" class="form">
+      <el-form ref="formRef" :model="formData" :inline="inline" class="form" :rules="rules">
         <template v-if="inline">
           <el-row>
             <el-col v-for="(value,item,index) in formLabels" :key="index" :span="12">
@@ -25,17 +25,16 @@
             :key="index"
             :label="value"
             label-width="140px"
-            :rules="[{required:true,message:'请输入',trigger:'blur'}]"
             :prop="item"
             class="modfiy-item"
           >
-            <slot :name="item"><div>{{ label(formData,item) }}</div></slot>
+            <slot :name="item"><div class="form-item">{{ label(formData,item) }}</div></slot>
           </el-form-item>
         </template>
       </el-form>
     </slot>
     <template #footer>
-      <template v-if="inline">
+      <template v-if="inline || isFooterShow">
         <slot name="dialogFooter" />
       </template>
       <template v-else>
@@ -68,9 +67,17 @@ export default {
       type: Boolean,
       default: false
     },
+    isFooterShow: {
+      type: Boolean,
+      default: false
+    },
     visible: {
       type: Boolean,
       required: false
+    },
+    rules: {
+      type: Object,
+      default: () => ({})
     }
   },
   computed: {
@@ -90,9 +97,14 @@ export default {
       this.$emit('update:visible', false)
       this.$refs.formRef?.resetFields()
     },
-    onConfirm() {
-      this.$emit('confirm')
-      this.handleClose()
+    async onConfirm() {
+      try {
+        await this.$refs.formRef?.validate()
+        await this.$emit('confirm')
+        this.$nextTick(this.handleClose)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
@@ -105,7 +117,7 @@ export default {
 }
 .form .modfiy-item .el-form-item__content{
   width: 396px;
-    line-height: 36px;
+  line-height: 36px;
 }
 .col-row-form{
   margin-bottom:0px;
@@ -134,4 +146,11 @@ export default {
     border: none;
     color: #655b56!important;
   }
+  // .form-item{
+  //   height: 40px;
+  //   line-height: 40px;
+  // }
+  // .el-dialog .el-dialog__body .el-form-item .el-form-item__label{
+  //   line-height: 36px;
+  // }
 </style>

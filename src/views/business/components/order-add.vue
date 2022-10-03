@@ -6,6 +6,7 @@
       :form-labels="newWorkLabel"
       :form-data="newWorkLabelFormData"
       :visible="newlyBuildVisible"
+      :rules="rules"
       @update:visible="$emit('update:newlyBuildVisible', $event)"
       @confirm="submitCreate"
     >
@@ -103,6 +104,13 @@ export default {
         assignorId: '运营人员：',
         desc: '备注：'
       },
+      rules: {
+        innerCode: [{ required: true, message: '请输入', trigger: 'blur' }],
+        productType: [{ required: true, message: '请输入', trigger: 'blur' }],
+        details: [{ required: true, message: '请输入', trigger: 'blur' }],
+        assignorId: [{ required: true, message: '请输入', trigger: 'blur' }],
+        desc: [{ required: true, message: '请输入', trigger: 'blur' }]
+      },
       listOperators: [],
       replenishmentVisible: false,
       replenishments: [],
@@ -163,8 +171,12 @@ export default {
       })
     },
     async submitCreate() {
-      const { data } = await createAJob(this.newWorkLabelFormData)
-      console.log(data)
+      try {
+        await createAJob(this.newWorkLabelFormData)
+        this.$parent.getOrderSearch()
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

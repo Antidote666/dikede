@@ -32,7 +32,7 @@
                 </el-col>
                 <el-col :span="6">
                   <div class="flex-clunm">
-                    <div class="num">{{ workObj('total') }}</div>
+                    <div class="num">{{ workObj('cancelTotal') }}</div>
                     <div class="text">取消工单(个)</div>
                   </div>
                 </el-col>
